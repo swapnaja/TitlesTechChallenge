@@ -1,0 +1,114 @@
+﻿@model TitlesTechChallenge.Models.Title
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<h4> @Model.TitleName  (@Model.ReleaseYear)</h4>
+<br />
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                    Awards
+                </a>
+            </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Award")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Year")
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.Awards)
+                    {
+                        <tr>
+                            @if (item.AwardWon == true)
+                            {
+                                <td> @Html.DisplayFor(modelItem => item.Award1) </td>
+                                <td> @Html.DisplayFor(modelItem => item.AwardYear) </td>
+                            }
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                    Story Line
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse">
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Language")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Description")
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.StoryLines)
+                    {
+
+                        <tr>
+                            <td> @Html.DisplayFor(modelItem => item.Language) </td>
+
+                            <td> @Html.DisplayFor(modelItem => item.Description) </td>
+
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                    Participant
+                </a>
+            </h4>
+        </div>
+        <div id="collapseThree" class="panel-collapse collapse">
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Participant")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Role")
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.TitleParticipants)
+                    {
+
+                        <tr>
+                            <td> @Html.DisplayFor(modelItem => item.Participant.Name) </td>
+
+                            <td> @Html.DisplayFor(modelItem => item.RoleType) </td>
+
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,67 @@
+﻿@model PagedList.IPagedList<TitlesTechChallenge.Models.Title>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Movie Titles</h3>
+
+<p>
+    <b>
+        @Html.ActionLink("Create New", "Create")
+    </b>
+</p>
+@using (Html.BeginForm("Index", "Titles", FormMethod.Get))
+{
+    <div class="div-search-content">
+        Find by Title: @Html.TextBox("searchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </div>
+}
+
+@if (Model.Count <= 0)
+{
+    <div class="div-info-content">
+        <h4>No results found.</h4>
+    </div>
+    <br />
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th>
+                @Html.ActionLink("Release Year", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TitleName)
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseYear)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.TitleId })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+<br />
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+<br />
+@Html.ActionLink("Back to List", "Index", "Titles")
